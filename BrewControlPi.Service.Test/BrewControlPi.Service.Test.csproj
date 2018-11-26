@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\BrewControlPi.Service\BrewControlPi.Service.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Unosquare.RaspberryIO.Peripherals" Version="0.2.3"/>
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+</Project>
