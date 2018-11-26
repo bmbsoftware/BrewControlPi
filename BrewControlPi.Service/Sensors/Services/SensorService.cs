@@ -27,7 +27,7 @@ namespace BrewControlPi.Service.Sensors.Services
 				var content = reader.ReadToEnd();
 				if (content.Split('\n')[0].Split(' ')[11] == "YES")
 				{
-					currentTemp = double.Parse(content.Split("=")[content.Split("=").Length - 1]) / 1000;
+					currentTemp = double.Parse(content.Split("=")[content.Split("=").Length - 1]);
 					currentTemp = Math.Round(currentTemp.Value, 2);
 				}
 			}
@@ -37,11 +37,12 @@ namespace BrewControlPi.Service.Sensors.Services
 				return null;
 			}
 
+			var cTemp = currentTemp.Value / 1000;
 			var fTemp = Math.Round(currentTemp.Value * 9 / 5 + 32, 2);
 			var result = new TemperatureSensor
 			{
 				Id = id,
-				CelsiusValue = currentTemp,
+				CelsiusValue = cTemp,
 				FahrenheitValue = fTemp
 			};
 			return result;
