@@ -11,10 +11,10 @@ namespace BrewControlPi.Service.Sensors.Services
 	{
 		public IEnumerable<Sensor> GetAll()
 		{
-			var contents = Directory.GetDirectories("/sys/bus/w1/devices").ToList();
+			var contents = Directory.EnumerateDirectories("/sys/bus/w1/devices").Select(dir => dir.Substring(dir.LastIndexOf("/") + 1));
 			var result = contents
 				.Where(x => x.StartsWith("28") || x.StartsWith("10"))
-				.Select(x => new Sensor { Id = x });
+				.Select(x => new TemperatureSensor { Id = x });
 			return result;
 		}
 
@@ -40,6 +40,7 @@ namespace BrewControlPi.Service.Sensors.Services
 			var fTemp = Math.Round(currentTemp.Value * 9 / 5 + 32, 2);
 			var result = new TemperatureSensor
 			{
+				Id = id,
 				CelsiusValue = currentTemp,
 				FahrenheitValue = fTemp
 			};
