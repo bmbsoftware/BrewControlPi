@@ -6,27 +6,30 @@ using BrewControlPi.Service.Sensors.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 
-[Route("api/[controller]")]
-public class SensorsController : Controller
+namespace BrewControlPi.WebApi.Controllers
 {
-	private readonly ISensorService _sensorService;
-
-	public SensorsController(ISensorService sensorService)
+	[Route("api/[controller]")]
+	public class SensorsController : Controller
 	{
-		_sensorService = sensorService;
-	}
+		private readonly ISensorService _sensorService;
 
-	[HttpGet]
-	public IActionResult Get()
-	{
-		var result = _sensorService.GetAll();
-		return Ok(result);
-	}
+		public SensorsController(ISensorService sensorService)
+		{
+			_sensorService = sensorService;
+		}
 
-	[HttpGet("{id}")]
-	public IActionResult Get(string id)
-	{
-		var result = _sensorService.GetTemperatureSensor(id);
-		return Ok(result);
+		[HttpGet]
+		public IActionResult Get()
+		{
+			var result = _sensorService.GetAll();
+			return Ok(result);
+		}
+
+		[HttpGet("{id}")]
+		public IActionResult Get(string id)
+		{
+			var result = _sensorService.GetTemperatureSensor(id);
+			return Ok(result);
+		}
 	}
 }

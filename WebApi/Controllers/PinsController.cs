@@ -2,38 +2,41 @@ using System;
 using BrewControlPi.Service.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
-[Route("api/[controller]")]
-public class PinsController : Controller
+namespace BrewControlPi.WebApi.Controllers
 {
-	private readonly IPinService _pinService;
-
-	public PinsController(IPinService pinService) 
+	[Route("api/[controller]")]
+	public class PinsController : Controller
 	{
-		_pinService = pinService;
-	}
+		private readonly IPinService _pinService;
 
-	[HttpGet]
-	public IActionResult Get()
-	{
-		Console.WriteLine("About to list pin statuses.");
-		var status = _pinService.GetStatus(1);
-		return Ok(status);
-	}
+		public PinsController(IPinService pinService)
+		{
+			_pinService = pinService;
+		}
 
-	[HttpGet("{pinId}")]
-	public IActionResult Get(int pinId)
-	{
-		Console.WriteLine($"About to get pin status for pin {pinId}.");
+		[HttpGet]
+		public IActionResult Get()
+		{
+			Console.WriteLine("About to list pin statuses.");
+			var status = _pinService.GetStatus(1);
+			return Ok(status);
+		}
 
-		var pinStatus = _pinService.GetStatus(pinId);
-		Console.WriteLine($"Return pin status of pin {pinId}: {pinStatus}");
-		return Ok(pinStatus ? "On" : "Off");
-	}
+		[HttpGet("{pinId}")]
+		public IActionResult Get(int pinId)
+		{
+			Console.WriteLine($"About to get pin status for pin {pinId}.");
 
-	[HttpPost]
-	public void SwitchPin(int pinId, int status)
-	{
-		Console.WriteLine($"About to change pin status for pin {pinId}.");
-		_pinService.UpdateStatus(pinId, status);
+			var pinStatus = _pinService.GetStatus(pinId);
+			Console.WriteLine($"Return pin status of pin {pinId}: {pinStatus}");
+			return Ok(pinStatus ? "On" : "Off");
+		}
+
+		[HttpPost]
+		public void SwitchPin(int pinId, int status)
+		{
+			Console.WriteLine($"About to change pin status for pin {pinId}.");
+			_pinService.UpdateStatus(pinId, status);
+		}
 	}
 }
